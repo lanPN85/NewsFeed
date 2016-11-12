@@ -19,20 +19,49 @@
 
         <TextView
             android:text="@string/latest_label"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/textView"
+            android:id="@+id/topic_view"
             android:layout_weight="1"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="normal|bold"
             android:fontFamily="sans-serif"
-            android:textAlignment="center"
+            android:textAlignment="viewStart"
             android:textIsSelectable="false"
             android:gravity="center"
             android:background="@color/colorAccent"
-            android:textColor="@android:color/white"
+            android:textColor="@color/colorTextPrimary"
             android:textAllCaps="true"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp" />
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:paddingRight="5dp"
+            android:paddingEnd="5dp" />
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/article_list"
+                android:scrollbars="none" />
+
+            <Button
+                android:text="@string/load_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/load"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

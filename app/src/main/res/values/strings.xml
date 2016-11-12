@@ -2,11 +2,16 @@
     <string name="app_name">Tin Tức</string>
     <string name="action_settings">Tùy chọn</string>
     <string name="action_add">Thêm nguồn tin</string>
+    <string name="action_refresh">Tải lại</string>
+
     <string name="latest_label">Tin mới</string>
     <string name="world_label">Quốc tế</string>
     <string name="vn_label">Trong nước</string>
     <string name="entertain_label">Giải trí</string>
     <string name="sports_label">Thể thao</string>
     <string name="tech_label">Công nghệ</string>
+    <string name="other_label">Khác</string>
     <string name="favorite_label">Yêu thích</string>
+
+    <string name="load_more">Hiện bài cũ hơn</string>
 </resources>
