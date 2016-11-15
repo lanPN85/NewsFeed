@@ -12,6 +12,7 @@
     <string name="tech_label">Công nghệ</string>
     <string name="other_label">Khác</string>
     <string name="favorite_label">Yêu thích</string>
+    <string name="downloaded_label">Đã tải về</string>
 
     <string name="load_more">Hiện bài cũ hơn</string>
 </resources>

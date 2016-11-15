@@ -44,4 +44,6 @@
         android:id="@+id/item_other" />
     <item android:title="@string/favorite_label"
         android:id="@+id/item_favorite" />
+    <item android:title="@string/downloaded_label"
+        android:id="@+id/item_downloaded" />
 </menu>

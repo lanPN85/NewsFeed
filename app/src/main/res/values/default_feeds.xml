@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="latest">
+    <string-array name="latest">
 
-    </array>
+    </string-array>
 
-    <array name="world">
+    <string-array name="world">
 
-    </array>
+    </string-array>
 
-    <array name="vn">
+    <string-array name="vn">
 
-    </array>
+    </string-array>
 
-    <array name="sports">
+    <string-array name="sports">
 
-    </array>
+    </string-array>
 
-    <array name="entertain">
+    <string-array name="entertain">
 
-    </array>
+    </string-array>
 
-    <array name="tech">
+    <string-array name="tech">
 
-    </array>
+    </string-array>
+
+    <string-array name="other">
+
+    </string-array>
 </resources>
