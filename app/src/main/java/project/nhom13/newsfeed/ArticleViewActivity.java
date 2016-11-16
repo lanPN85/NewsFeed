@@ -2,7 +2,12 @@ package project.nhom13.newsfeed;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,15 +17,48 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class ArticleViewActivity extends AppCompatActivity {
+    private ProgressBar loading;
     private WebView webView;
+    private ImageButton home;
+    private ImageButton next;
+    private ImageButton prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_view);
 
+        home = (ImageButton)findViewById(R.id.homeBtn);
+        next = (ImageButton)findViewById(R.id.nextBtn);
+        prev = (ImageButton)findViewById(R.id.previousBtn);
+        loading = (ProgressBar)findViewById(R.id.article_progress);
+
         webView = (WebView)findViewById(R.id.webview);
         webView.loadUrl("http://www.cracked.com/article_24449_7-wtf-ways-famous-companies-rip-you-off-every-day.html");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_article, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.action_settings2:
+                return true;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public static String getHtml(String url) throws IOException {
@@ -40,5 +78,9 @@ public class ArticleViewActivity extends AppCompatActivity {
         in.close();
 
         return html.toString();
+    }
+
+    public void toHome(View view){
+
     }
 }

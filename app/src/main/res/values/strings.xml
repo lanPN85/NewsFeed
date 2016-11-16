@@ -3,6 +3,7 @@
     <string name="action_settings">Tùy chọn</string>
     <string name="action_add">Thêm nguồn tin</string>
     <string name="action_refresh">Tải lại</string>
+    <string name="action_download">Tải về</string>
 
     <string name="latest_label">Tin mới</string>
     <string name="world_label">Quốc tế</string>

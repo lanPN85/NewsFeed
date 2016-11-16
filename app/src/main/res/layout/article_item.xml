@@ -4,14 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/colorAccent"
+    android:padding="7dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/article_image"
+        tools:ignore="ContentDescription"
+        android:scaleType="matrix"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/article_source"
         android:textAlignment="textEnd"
-        android:layout_gravity="end"/>
+        android:layout_gravity="end"
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="12sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -19,19 +30,14 @@
         android:id="@+id/article_date"
         android:textAlignment="viewStart"
         android:layout_gravity="start"
-        android:textColor="@color/colorTextPrimary" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/article_image"
-        tools:ignore="ContentDescription" />
+        android:textColor="@color/colorTextPrimary"
+        android:textSize="10sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/article_title"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:textAlignment="textStart"
         android:layout_gravity="start"
         android:textStyle="normal|bold"
@@ -41,14 +47,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/article_preview"
-        android:textSize="18sp"
+        android:textSize="12sp"
         android:textAlignment="viewStart"
-        android:layout_gravity="start"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/aricle_preview"
-        android:textSize="18sp"
+        android:layout_gravity="start"
         android:textColor="@color/colorTextSecondary" />
+
 </LinearLayout>
