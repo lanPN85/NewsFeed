@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="topic_list">
+        <item>@string/latest_label</item>
+        <item>@string/world_label</item>
+        <item>@string/vn_label</item>
+        <item>@string/sports_label</item>
+        <item>@string/entertain_label</item>
+        <item>@string/tech_label</item>
+        <item>@string/other_label</item>
+    </string-array>
+</resources>

@@ -1,12 +1,12 @@
 package project.nhom13.newsfeed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
@@ -19,22 +19,20 @@ import java.net.URLConnection;
 public class ArticleViewActivity extends AppCompatActivity {
     private ProgressBar loading;
     private WebView webView;
-    private ImageButton home;
-    private ImageButton next;
-    private ImageButton prev;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_view);
 
-        home = (ImageButton)findViewById(R.id.homeBtn);
-        next = (ImageButton)findViewById(R.id.nextBtn);
-        prev = (ImageButton)findViewById(R.id.previousBtn);
         loading = (ProgressBar)findViewById(R.id.article_progress);
 
+        Intent intent = getIntent();
+        String url = intent.getStringExtra("url");
+
         webView = (WebView)findViewById(R.id.webview);
-        webView.loadUrl("http://www.cracked.com/article_24449_7-wtf-ways-famous-companies-rip-you-off-every-day.html");
+        webView.loadUrl(url);
+        //webView.loadUrl("http://www.cracked.com/article_24449_7-wtf-ways-famous-companies-rip-you-off-every-day.html");
     }
 
     @Override

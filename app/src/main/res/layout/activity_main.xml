@@ -13,11 +13,13 @@
     tools:context="project.nhom13.newsfeed.Main">
 
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+        style="?android:attr/progressBarStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/list_progress"
-        android:visibility="visible" />
+        tools:visibility="gone"
+        android:visibility="gone"
+        android:indeterminate="true" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -22,7 +22,7 @@
         android:title="@string/action_settings"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/menu"
         android:visible="true" />
     <item android:title="@string/latest_label"
         android:id="@+id/item_latest"

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Tùy Chọn">
+    <ListPreference
+        android:key="load_amount"
+        android:title="Số bài được tải"
+        android:summary="Số bài được hiển thị trong màn hình chính"
+        android:entries="@array/load_amount"
+        android:entryValues="@array/load_amount"
+        android:dialogTitle="Chọn số bài được tải"
+        android:defaultValue="@string/default_load">
+    </ListPreference>
+</PreferenceScreen>

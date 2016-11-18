@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <header android:fragment="project.nhom13.newsfeed.Preferences$GeneralPrefs"
+            android:title="Tùy Chọn Chung"/>
+    <header android:title="RSS">
+        <intent android:action="android.intent.action.APPLICATION_PREFERENCES"
+            android:targetPackage="project.nhom13.newsfeed"
+            android:targetClass="project.nhom13.newsfeed.RSSPrefs" />
+    </header>
+</preference-headers>

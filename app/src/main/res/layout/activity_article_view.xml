@@ -19,52 +19,12 @@
         android:id="@+id/article_progress"
         android:visibility="invisible" />
 
-    <ScrollView
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:fitsSystemWindows="true"
+        android:keepScreenOn="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <WebView
-                android:id="@+id/webview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fadeScrollbars="true"
-                android:fitsSystemWindows="true"
-                android:keepScreenOn="true" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/previousBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.16"
-                    app:srcCompat="@drawable/leftarrow"
-                    tools:ignore="ContentDescription" />
-
-                <ImageButton
-                    android:id="@+id/homeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/home"
-                    tools:ignore="ContentDescription" />
-
-                <ImageButton
-                    android:id="@+id/nextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.16"
-                    app:srcCompat="@drawable/rightarrow"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

@@ -1,6 +1,9 @@
 package project.nhom13.newsfeed;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -25,7 +30,7 @@ public class Main extends AppCompatActivity {
     private ListView listView;
     private NavigationView nav_view;
 
-    private String current_topic = "latest";
+    private String current_topic;
     private List<NewsHeader> model = null;
     private ArrayAdapter<NewsHeader> adapter = null;
 
@@ -35,7 +40,6 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loading = (ProgressBar) findViewById(R.id.list_progress);
-        loading.setProgress(4000);
 
         topic = (TextView) findViewById(R.id.topic_view);
         listView = (ListView) findViewById(R.id.article_list);
@@ -51,8 +55,37 @@ public class Main extends AppCompatActivity {
                     });
         }
 
-        getHeaders();
+        if(savedInstanceState==null){
+            current_topic = "latest";
+        }else{
+            current_topic = savedInstanceState.getString("current_topic");
+            if(current_topic.equals("world")) topic.setText(getResources().getString(R.string.world_label));
+            else if(current_topic.equals("vn")) topic.setText(getResources().getString(R.string.vn_label));
+            else if(current_topic.equals("sports")) topic.setText(getResources().getString(R.string.sports_label));
+            else if(current_topic.equals("entertain")) topic.setText(getResources().getString(R.string.entertain_label));
+            else if(current_topic.equals("tech")) topic.setText(getResources().getString(R.string.tech_label));
+            else if(current_topic.equals("other")) topic.setText(getResources().getString(R.string.other_label));
+            else if(current_topic.equals("favorite")) topic.setText(getResources().getString(R.string.favorite_label));
+            else if(current_topic.equals("downloaded")) topic.setText(getResources().getString(R.string.downloaded_label));
+        }
 
+        getHeaders();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                NewsHeader header = model.get(position);
+                String url = header.getUrl();
+
+                Intent intent = new Intent(Main.this, ArticleViewActivity.class);
+                intent.putExtra("url",url);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putString("current_topic",current_topic);
     }
 
     @Override
@@ -72,6 +105,8 @@ public class Main extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings:
+                Intent intent = new Intent(Main.this,Preferences.class);
+                startActivity(intent);
                 return true;
             case R.id.action_add:
                 return true;
@@ -95,7 +130,7 @@ public class Main extends AppCompatActivity {
                 topic.setText(getResources().getString(R.string.vn_label));
                 return true;
             case R.id.item_sport:
-                current_topic = "sport";
+                current_topic = "sports";
                 getHeaders();
                 topic.setText(getResources().getString(R.string.sports_label));
                 return true;
@@ -130,6 +165,11 @@ public class Main extends AppCompatActivity {
     }
 
     private void getHeaders(){
+        if(!isNetworkAvailable()){
+            Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
+            toast.show();
+        }
+
         model = new ArrayList<NewsHeader>(30);
         // Test item
         NewsHeader item = new NewsHeader();
@@ -138,12 +178,14 @@ public class Main extends AppCompatActivity {
         item.setPubDate(new GregorianCalendar());
         item.setSite("FakeNews");
         item.setImageUrl("https://scontent-hkg3-1.xx.fbcdn.net/t31.0-8/13502876_1041588202596877_4589638001439672089_o.jpg");
+        item.setUrl("http://www.cracked.com/article_24424_6-extremely-minor-movie-scenes-that-cost-fortune-to-film.html");
         NewsHeader item2 = new NewsHeader();
         item2.setPreview("GKE SMDKDKDf EEF KKSdKS FKDFED Kfkdlk dfnallaskdmlkd ldkklkndan akdlsa");
         item2.setTitle("Fake Item 2");
         item2.setPubDate(new GregorianCalendar());
         item2.setSite("FakeNews");
         item2.setImageUrl("https://scontent-hkg3-1.xx.fbcdn.net/t31.0-8/13502876_1041588202596877_4589638001439672089_o.jpg");
+        item2.setUrl("http://www.cracked.com/personal-experiences-2409-my-entire-town-was-fire-evacuating-epic-disaster.html");
 
         model.add(item);
 
@@ -153,7 +195,13 @@ public class Main extends AppCompatActivity {
         model.add(item2);
     }
 
-    private class HeaderAdapter extends ArrayAdapter<NewsHeader>{
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return (info != null);
+    }
+
+        private class HeaderAdapter extends ArrayAdapter<NewsHeader>{
         HeaderAdapter(){
             super(Main.this,R.layout.article_item,model);
         }

@@ -1,30 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="latest">
-
+        <item>http://www.dailytelegraph.com.au/news/breaking-news/rss</item>
+        <item>http://rss.cnn.com/rss/edition.rss</item>
     </string-array>
 
+    <string-array name="latest_name">
+        <item>Telegraph</item>
+        <item>CNN</item>
+    </string-array>
+    <!---->
     <string-array name="world">
-
+        <item>http://www.dailytelegraph.com.au/news/world/rss</item>
     </string-array>
 
+    <string-array name="world_name">
+        <item>Telegraph</item>
+    </string-array>
+    <!---->
     <string-array name="vn">
-
+        <item>http://www.dailytelegraph.com.au/news/national/rss</item>
     </string-array>
 
+    <string-array name="vn_name">
+        <item>Telegraph</item>
+    </string-array>
+    <!---->
     <string-array name="sports">
-
+        <item>http://www.dailytelegraph.com.au/entertainment/music/rss</item>
     </string-array>
 
+    <string-array name="sports_name">
+        <item>Telegraph</item>
+    </string-array>
+    <!---->
     <string-array name="entertain">
-
+        <item>http://www.dailytelegraph.com.au/entertainment/sydney-confidential/rss</item>
     </string-array>
 
+    <string-array name="entertain_name">
+        <item>Telegraph</item>
+    </string-array>
+    <!---->
     <string-array name="tech">
-
+        <item>http://www.dailytelegraph.com.au/entertainment/celebrity/rss</item>
     </string-array>
 
+    <string-array name="tech_name">
+        <item>Telegraph</item>
+    </string-array>
+    <!---->
     <string-array name="other">
+        <item>http://www.dailytelegraph.com.au/lifestyle/rss</item>
+    </string-array>
 
+    <string-array name="other_name">
+        <item>Telegraph</item>
     </string-array>
 </resources>

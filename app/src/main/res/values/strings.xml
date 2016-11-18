@@ -16,4 +16,10 @@
     <string name="downloaded_label">Đã tải về</string>
 
     <string name="load_more">Hiện bài cũ hơn</string>
+    <string name="title_activity_preferences">Tùy Chọn</string>
+    <string name="title_rss_preferences">RSS</string>
+
+    <string name="notify_changes_saved">Các thay đổi đã được lưu</string>
+    <string name="notify_no_network">Không có kết nối mạng</string>
+
 </resources>

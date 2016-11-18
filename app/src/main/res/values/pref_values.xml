@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="load_amount">
+        <item>30</item>
+        <item>50</item>
+        <item>80</item>
+    </string-array>
+    <string name="default_load">30</string>
+</resources>

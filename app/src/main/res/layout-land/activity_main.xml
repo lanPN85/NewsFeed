@@ -31,13 +31,16 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
         <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_progress"
-        android:visibility="invisible" />
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_progress"
+            android:paddingBottom="3dp"
+            tools:visibility="gone"
+            android:visibility="gone"
+            android:indeterminate="true" />
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

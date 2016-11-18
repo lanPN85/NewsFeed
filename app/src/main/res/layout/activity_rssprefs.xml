@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rssprefs"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="project.nhom13.newsfeed.RSSPrefs">
+
+    <LinearLayout android:id="@+id/linear_l"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        tools:context="project.nhom13.newsfeed.RSSPrefs">
+    <TextView
+        android:text="Danh sách RSS:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rss_header"
+        android:textStyle="normal|bold"
+        android:textSize="20sp" />
+
+        <TextView
+            android:text="@string/latest_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv1"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/latest_feeds"
+            android:scrollbars="none" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/world_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv2"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/world_feeds" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/vn_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv3"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/vn_feeds" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/sports_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv4"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sports_feeds" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/entertain_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv5"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/entertain_feeds" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/tech_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv6"
+            android:textSize="18sp"
+            android:textStyle="normal|bold" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tech_feeds" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rss_seperator" />
+
+        <TextView
+            android:text="@string/other_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv7"
+            android:textStyle="normal|bold"
+            android:textSize="18sp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/othet_feeds" />
+    </LinearLayout>
+</ScrollView>

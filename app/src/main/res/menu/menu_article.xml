@@ -5,11 +5,25 @@
     tools:context="project.nhom13.newsfeed.ArticleViewActivity">
 
     <item android:title="@string/action_download"
-        app:showAsAction="ifRoom"
         android:id="@+id/action_download"
-        android:icon="@drawable/downloadedicon" />
+        android:icon="@drawable/downloadedicon"
+        app:showAsAction="never" />
     <item android:title="@string/action_settings"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         android:icon="@android:drawable/ic_menu_manage"
         android:id="@+id/action_settings2" />
+    <item
+        android:id="@+id/prev"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/leftarrow"
+        tools:ignore="MenuTitle" />
+    <item android:title=""
+        android:id="@+id/next"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/rightarrow"
+        android:showAsAction="ifRoom" />
+    <item
+        android:title="Trang chủ"
+        android:id="@+id/home"
+        app:showAsAction="never" />
 </menu>
