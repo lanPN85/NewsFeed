@@ -109,6 +109,8 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_add:
+                Intent intent2 = new Intent(Main.this,AddDialog.class);
+                startActivity(intent2);
                 return true;
             case R.id.action_refresh:
                 getHeaders();

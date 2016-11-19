@@ -20,7 +20,7 @@
         android:orientation="vertical"
         tools:context="project.nhom13.newsfeed.RSSPrefs">
     <TextView
-        android:text="Danh sách RSS:"
+        android:text="Danh sách kênh RSS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rss_header"

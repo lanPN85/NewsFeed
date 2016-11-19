@@ -8,11 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class FeedDBHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 4;
+    public static final int DB_VERSION = 7;
     private static final String DB_NAME = "feeds.db";
 
     public static final String RSS_TABLE_NAME = "rss";
-
     public static final String COLUMN_URL = "_id";
     public static final String COLUMN_SITE = "site";
     public static final String COLUMN_TOPIC = "topic";
@@ -20,10 +19,10 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FAVORITE = "fav";
 
     public static final String ARTICLES_TABLE_NAME = "articles";
-    public static final String COLUMN_ARITCLE_URL = "_id";
+    public static final String COLUMN_ARTICLE_URL = "_id";
     public static final String COLUMN_ARTICLE_SITE= "site";
     public static final String COLUMN_ARTICLE_DATE="date";
-    public static final String COLUMN_ARITCLE_TITLE = "title";
+    public static final String COLUMN_ARTICLE_TITLE = "title";
     public static final String COLUMN_ARTICLE_PREVIEW = "preview";
     public static final String COLUMN_ARTICLE_HTML = "html";
 
@@ -45,8 +44,8 @@ public class FeedDBHelper extends SQLiteOpenHelper {
 
         String CREATE_ARTICLES_TABLE = "CREATE TABLE IF NOT EXISTS " +
                 ARTICLES_TABLE_NAME + "("
-                +  COLUMN_ARITCLE_URL
-                + " TEXT PRIMARY KEY," + COLUMN_ARTICLE_SITE +" TEXT, "+COLUMN_ARTICLE_DATE+" TEXT,"+COLUMN_ARITCLE_TITLE +
+                + COLUMN_ARTICLE_URL
+                + " TEXT PRIMARY KEY," + COLUMN_ARTICLE_SITE +" TEXT, "+COLUMN_ARTICLE_DATE+" TEXT,"+ COLUMN_ARTICLE_TITLE +
                 " TEXT,"+ COLUMN_ARTICLE_PREVIEW+" TEXT,"+COLUMN_ARTICLE_HTML+" TEXT"+")";
         db.execSQL(CREATE_ARTICLES_TABLE);
 
@@ -151,28 +150,35 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void add_rss(String url, String site, String topic , Boolean fav) {
-        ContentValues values = new ContentValues();
+    public boolean add_rss(String url, String site, String topic , Boolean fav) {
+        ContentValues values = new ContentValues(5);
+        int favorite = (fav)?1:0;
         values.put(COLUMN_URL, url);
         values.put(COLUMN_SITE, site);
         values.put(COLUMN_TOPIC, topic);
-        values.put(COLUMN_ACTIVE, true);
-        values.put(COLUMN_FAVORITE, fav);
+        values.put(COLUMN_ACTIVE, 1);
+        values.put(COLUMN_FAVORITE, favorite);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(RSS_TABLE_NAME, null, values);
+        try{
+            db.insert(RSS_TABLE_NAME, null, values);
+        }catch (Exception e){
+            db.close();
+            return false;
+        }
         db.close();
+        return true;
     }
     public void add_article(String url, String site, String date, String title, String preview) {
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_URL, url);
-        values.put(COLUMN_SITE, site);
-        values.put(COLUMN_TOPIC, date);
-        values.put(COLUMN_SITE, title);
-        values.put(COLUMN_TOPIC, preview);
+        ContentValues values = new ContentValues(5);
+        values.put(COLUMN_ARTICLE_URL, url);
+        values.put(COLUMN_ARTICLE_SITE, site);
+        values.put(COLUMN_ARTICLE_DATE, date);
+        values.put(COLUMN_ARTICLE_TITLE, title);
+        values.put(COLUMN_ARTICLE_PREVIEW, preview);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(RSS_TABLE_NAME, null, values);
+        db.insert(ARTICLES_TABLE_NAME, null, values);
         db.close();
     }
 
@@ -180,14 +186,12 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     public boolean delete_article (String url) {
         boolean result = false;
         String query = "Select * FROM " +ARTICLES_TABLE_NAME + " WHERE " +
-                COLUMN_ARITCLE_URL + " = \"" + url + "\"";
+                COLUMN_ARTICLE_URL + " = \"" + url + "\"";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
-
-            db.delete(ARTICLES_TABLE_NAME, COLUMN_ARITCLE_URL + " = \""+ url + "\"", null );
-
+            db.delete(ARTICLES_TABLE_NAME, COLUMN_ARTICLE_URL + " = \""+ url + "\"", null );
             cursor.close();
             result = true;
         }
@@ -205,20 +209,45 @@ public class FeedDBHelper extends SQLiteOpenHelper {
 
         ContentValues contentValues = new ContentValues(1);
         contentValues.put(COLUMN_ACTIVE, active);
+
         if(cursor.moveToFirst()){
-
             db.update(RSS_TABLE_NAME,contentValues, COLUMN_URL +" = \""+url + "\"",null);
-            return  true;
+            return true;
         }
-
         return false;
     }
 
+    public boolean set_favorite(String url, boolean bl){
+        int favorite = (bl)?1:0;
+        String query = "Select * FROM " + RSS_TABLE_NAME + " WHERE " +
+                COLUMN_URL + " = \"" + url  + "\"" ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+
+        ContentValues contentValues = new ContentValues(1);
+        contentValues.put(COLUMN_FAVORITE, favorite);
+
+        if(cursor.moveToFirst()){
+            db.update(RSS_TABLE_NAME,contentValues, COLUMN_URL +" = \""+url + "\"",null);
+            return true;
+        }
+        return false;
+    }
 
     public Cursor select_topic (String topic){
         String query = "Select * FROM " + RSS_TABLE_NAME + " WHERE " +
                 COLUMN_TOPIC + " = \"" + topic  + "\"" +" and "+
                 COLUMN_ACTIVE +" = 1" ;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        return cursor;
+    }
+
+    public Cursor select_url (String url){
+        String query = "Select * FROM " + RSS_TABLE_NAME + " WHERE " +
+                COLUMN_URL + " = \"" + url  + "\"" ;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query,null);
@@ -236,9 +265,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
 
     public Cursor select_article_all (){
-        String query = "Select " + COLUMN_ARITCLE_URL + COLUMN_ARTICLE_SITE+
+        String query = "Select " + COLUMN_ARTICLE_URL + COLUMN_ARTICLE_SITE+
                 COLUMN_ARTICLE_DATE+
-                COLUMN_ARITCLE_TITLE+
+                COLUMN_ARTICLE_TITLE +
                 COLUMN_ARTICLE_PREVIEW+
                 " FROM " + ARTICLES_TABLE_NAME ;
 
@@ -249,7 +278,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     public Cursor select_article_html (String url){
         String query = "Select " + COLUMN_ARTICLE_HTML+
                 " FROM " + ARTICLES_TABLE_NAME + " WHERE "
-                + COLUMN_ARITCLE_URL +" = \" "+ url + "\"";
+                + COLUMN_ARTICLE_URL +" = \" "+ url + "\"";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query,null);
@@ -261,6 +290,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
     public int getActive(Cursor c){
         return c.getInt(3);
+    }
+    public int getFavorite(Cursor c){
+        return c.getInt(4);
     }
 
 }

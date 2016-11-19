@@ -19,7 +19,18 @@
     <string name="title_activity_preferences">Tùy Chọn</string>
     <string name="title_rss_preferences">RSS</string>
 
+    <string name="request_rss_url">RSS: </string>
+    <string name="request_rss_name">Tên kênh: </string>
+    <string name="rss_name_hint">Trang web cung cấp kênh RSS. VD: vnexpress.net</string>
+    <string name="request_rss_topic">Chủ đề: </string>
+    <string name="request_rss_favorite">Yêu thích: </string>
+    <string name="request_confirm">Thêm RSS</string>
+    <string name="request_cancel">Quay lại</string>
+
     <string name="notify_changes_saved">Các thay đổi đã được lưu</string>
     <string name="notify_no_network">Không có kết nối mạng</string>
+    <string name="notify_add_success">Đã thêm RSS</string>
+    <string name="notify_add_failure">Thêm RSS không thành công. Đảm bảo bạn đang có kết nối mạng và đường dẫn RSS là chính xác</string>
+    <string name="notify_add_failure2">Thêm RSS không thành công. Đường dẫn RSS đã tồn tại</string>
 
 </resources>

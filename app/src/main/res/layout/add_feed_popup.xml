@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:alpha="1"
+    android:background="@color/colorAccent"
+    android:elevation="10dp"
+    android:outlineProvider="background"
+    android:padding="5dp"
+
+    tools:context=".AddDialog"
+    app:layout_collapseParallaxMultiplier="1.0">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:text="@string/request_rss_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtv1"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="16sp"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="center_vertical|end"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:id="@+id/add_rss_url"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="12sp"
+            android:lines="2" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/request_rss_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtv2"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="center_vertical|end"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri"
+            android:id="@+id/add_rss_name"
+            android:hint="@string/rss_name_hint"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/colorTextPrimary"
+            android:textIsSelectable="true"
+            android:textColorHint="@color/colorTextSecondary"
+            android:keepScreenOn="true"
+            android:textSize="12sp"
+            android:ems="18" />
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp">
+
+        <TextView
+            android:text="@string/request_rss_topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtv3"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="end" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_rss_topic"
+            android:entries="@array/topic_list"
+            android:spinnerMode="dialog"
+            android:keepScreenOn="false" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/request_rss_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtv4"
+            android:textSize="16sp"
+            android:textColor="@color/colorTextPrimary"
+            android:textAlignment="viewEnd"
+            android:layout_gravity="end"/>
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/favorite_switch"
+            android:textSize="18sp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_span="2"
+            android:layout_gravity="start"
+            android:paddingLeft="8dp"
+            android:paddingStart="8dp"
+            android:paddingRight="3dp"
+            android:paddingEnd="3dp" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_span="2"
+            style="@style/Base.Widget.AppCompat.ButtonBar">
+
+            <Button
+                android:text="@string/request_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirm_btn"
+                android:layout_weight="1"
+                android:onClick="add"/>
+
+            <Button
+                android:text="@string/request_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cancel_btn"
+                android:layout_weight="1"
+                android:onClick="cancel"/>
+        </LinearLayout>
+
+    </TableRow>
+</TableLayout>

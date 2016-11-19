@@ -9,4 +9,14 @@
         <item>@string/tech_label</item>
         <item>@string/other_label</item>
     </string-array>
+
+    <string-array name="topic_list_sqlite">
+        <item>latest</item>
+        <item>world</item>
+        <item>vn</item>
+        <item>sports</item>
+        <item>entertain</item>
+        <item>tech</item>
+        <item>other</item>
+    </string-array>
 </resources>
