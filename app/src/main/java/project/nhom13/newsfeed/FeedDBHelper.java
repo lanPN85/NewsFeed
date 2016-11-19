@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class FeedDBHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 8;
     private static final String DB_NAME = "feeds.db";
 
     public static final String RSS_TABLE_NAME = "rss";
@@ -245,6 +245,15 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor select_all_topic (String topic){
+        String query = "Select * FROM " + RSS_TABLE_NAME + " WHERE " +
+                COLUMN_TOPIC + " = \"" + topic  + "\"";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query,null);
+        return cursor;
+    }
+
     public Cursor select_url (String url){
         String query = "Select * FROM " + RSS_TABLE_NAME + " WHERE " +
                 COLUMN_URL + " = \"" + url  + "\"" ;
@@ -287,6 +296,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
 
     public String getURl(Cursor c){
         return c.getString(0);
+    }
+    public String getSite(Cursor c){
+        return c.getString(1);
     }
     public int getActive(Cursor c){
         return c.getInt(3);

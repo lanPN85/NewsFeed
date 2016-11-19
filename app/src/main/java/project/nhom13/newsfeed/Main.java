@@ -1,12 +1,16 @@
 package project.nhom13.newsfeed;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,8 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Collections;
 import java.util.List;
+
+import project.nhom13.newsfeed.util.ImageGetter;
+import project.nhom13.newsfeed.util.RSSParser;
 
 public class Main extends AppCompatActivity {
     private ProgressBar loading;
@@ -69,7 +76,6 @@ public class Main extends AppCompatActivity {
             else if(current_topic.equals("downloaded")) topic.setText(getResources().getString(R.string.downloaded_label));
         }
 
-        getHeaders();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,6 +87,8 @@ public class Main extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getHeaders();
     }
 
     @Override
@@ -170,31 +178,46 @@ public class Main extends AppCompatActivity {
         if(!isNetworkAvailable()){
             Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
             toast.show();
+            return;
         }
 
-        model = new ArrayList<NewsHeader>(30);
-        // Test item
-        NewsHeader item = new NewsHeader();
-        item.setPreview("ABCDEWS");
-        item.setTitle("Fake Item");
-        item.setPubDate(new GregorianCalendar());
-        item.setSite("FakeNews");
-        item.setImageUrl("https://scontent-hkg3-1.xx.fbcdn.net/t31.0-8/13502876_1041588202596877_4589638001439672089_o.jpg");
-        item.setUrl("http://www.cracked.com/article_24424_6-extremely-minor-movie-scenes-that-cost-fortune-to-film.html");
-        NewsHeader item2 = new NewsHeader();
-        item2.setPreview("GKE SMDKDKDf EEF KKSdKS FKDFED Kfkdlk dfnallaskdmlkd ldkklkndan akdlsa");
-        item2.setTitle("Fake Item 2");
-        item2.setPubDate(new GregorianCalendar());
-        item2.setSite("FakeNews");
-        item2.setImageUrl("https://scontent-hkg3-1.xx.fbcdn.net/t31.0-8/13502876_1041588202596877_4589638001439672089_o.jpg");
-        item2.setUrl("http://www.cracked.com/personal-experiences-2409-my-entire-town-was-fire-evacuating-epic-disaster.html");
+        model = new ArrayList<NewsHeader>(50);
+        FeedDBHelper helper = new FeedDBHelper(this,null,FeedDBHelper.DB_VERSION);
+        Cursor cursor;
 
-        model.add(item);
+        if(current_topic.equals("downloaded")){
+            //TODO Add downloaded query
+            RSSParser.threads_left = 0;
+
+        }else{
+            if(current_topic.equals("favorite")){
+                cursor = helper.select_fav();
+            }else{
+                cursor = helper.select_topic(current_topic);
+            }
+            int feed_count = cursor.getCount();
+            RSSParser.threads_left = feed_count;
+            while (cursor.moveToNext()){
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int total_limit = Integer.parseInt(prefs.getString("load_amount","30"));
+                int feed_limit = (int)Math.ceil((double)total_limit/(double)feed_count);
+
+                RSSParser parser = new RSSParser(model,feed_limit);
+                parser.execute(helper.getURl(cursor),helper.getSite(cursor));
+            }
+
+            helper.close();
+        }
 
         adapter = new HeaderAdapter();
-        listView.setAdapter(adapter);
-
-        model.add(item2);
+        Runnable wait = new Runnable() {
+            @Override
+            public void run() {
+                waitForHeaders();
+            }
+        };
+        Thread thread = new Thread(wait);
+        thread.start();
     }
 
     private boolean isNetworkAvailable() {
@@ -203,7 +226,30 @@ public class Main extends AppCompatActivity {
         return (info != null);
     }
 
-        private class HeaderAdapter extends ArrayAdapter<NewsHeader>{
+    private void waitForHeaders(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                listView.setAdapter(null);
+                loading.setVisibility(View.VISIBLE);
+            }
+        });
+
+        while (RSSParser.threads_left>0){
+        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Collections.shuffle(model);
+                Collections.sort(model);
+                loading.setVisibility(View.GONE);
+                listView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private class HeaderAdapter extends ArrayAdapter<NewsHeader>{
         HeaderAdapter(){
             super(Main.this,R.layout.article_item,model);
         }
@@ -232,14 +278,14 @@ public class Main extends AppCompatActivity {
         private TextView source;
         private TextView date;
         private TextView title;
-        private TextView preview;
+        private TextView preview2;
         private ImageView image;
 
         HeaderHolder(View row){
             source = (TextView)row.findViewById(R.id.article_source);
             date = (TextView)row.findViewById(R.id.article_date);
             title = (TextView)row.findViewById(R.id.article_title);
-            preview = (TextView)row.findViewById(R.id.article_preview);
+            preview2 = (TextView)row.findViewById(R.id.article_preview2);
             image = (ImageView)row.findViewById(R.id.article_image);
         }
 
@@ -247,8 +293,7 @@ public class Main extends AppCompatActivity {
             source.setText(header.getSite());
             date.setText(header.getPubDateAsString());
             title.setText(header.getTitle());
-            preview.setText(header.getPreview());
-            header.getImage(image);
+            preview2.setText(Html.fromHtml(header.getPreview(), new ImageGetter(image),null));
         }
     }
 }

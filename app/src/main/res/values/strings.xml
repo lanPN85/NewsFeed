@@ -32,5 +32,6 @@
     <string name="notify_add_success">Đã thêm RSS</string>
     <string name="notify_add_failure">Thêm RSS không thành công. Đảm bảo bạn đang có kết nối mạng và đường dẫn RSS là chính xác</string>
     <string name="notify_add_failure2">Thêm RSS không thành công. Đường dẫn RSS đã tồn tại</string>
+    <string name="notify_general_error">Đã có lỗi xảy ra</string>
 
 </resources>

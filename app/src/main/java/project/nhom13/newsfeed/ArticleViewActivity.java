@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import java.io.BufferedReader;
@@ -31,8 +32,8 @@ public class ArticleViewActivity extends AppCompatActivity {
         String url = intent.getStringExtra("url");
 
         webView = (WebView)findViewById(R.id.webview);
+        webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
-        //webView.loadUrl("http://www.cracked.com/article_24449_7-wtf-ways-famous-companies-rip-you-off-every-day.html");
     }
 
     @Override

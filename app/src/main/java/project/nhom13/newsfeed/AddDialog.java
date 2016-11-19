@@ -55,6 +55,7 @@ public class AddDialog extends Activity {
         Cursor cursor = helper.select_url(url);
         if(cursor.moveToFirst()){
             failureToast2.show();
+            helper.close();
             return;
         }
         String name = nameView.getText().toString();
@@ -64,6 +65,7 @@ public class AddDialog extends Activity {
 
         boolean b = helper.add_rss(url,name,topic,isFav);
         if(b) successToast.show();
+        helper.close();
         return;
     }
 

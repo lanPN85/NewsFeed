@@ -1,11 +1,5 @@
 package project.nhom13.newsfeed;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.widget.ImageView;
-
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -19,7 +13,6 @@ public class NewsHeader implements Comparable<NewsHeader>{
     private GregorianCalendar pubDate;
     private String site;
     private String url;
-    private String imageUrl;
     private String preview;
 
     public String getTitle() {
@@ -33,6 +26,7 @@ public class NewsHeader implements Comparable<NewsHeader>{
         return pubDate;
     }
     public String getPubDateAsString(){
+        if(pubDate==null) return "";
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         return format.format(pubDate.getTime());
     }
@@ -54,22 +48,12 @@ public class NewsHeader implements Comparable<NewsHeader>{
         this.url = url;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public void getImage(ImageView bmImage){
-        DownloadImageTask dt = new DownloadImageTask(bmImage);
-        dt.execute(imageUrl);
-    }
 
     public String getPreview() {
         return preview;
     }
     public void setPreview(String preview) {
-        this.preview = preview;
+        this.preview = preview.trim();
     }
 
     @Override
@@ -80,34 +64,6 @@ public class NewsHeader implements Comparable<NewsHeader>{
             if(pubDate.after(o.getPubDate())) return -1;
             else if(pubDate.before(o.getPubDate())) return 1;
             else return 0;
-        }
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-        public DownloadImageTask() {
-
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
         }
     }
 }

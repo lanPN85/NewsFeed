@@ -2,6 +2,13 @@ package project.nhom13.newsfeed.util;
 
 import android.os.AsyncTask;
 
+import org.mcsoxford.rss.RSSException;
+import org.mcsoxford.rss.RSSFault;
+import org.mcsoxford.rss.RSSFeed;
+import org.mcsoxford.rss.RSSItem;
+import org.mcsoxford.rss.RSSReader;
+
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import project.nhom13.newsfeed.NewsHeader;
@@ -10,50 +17,54 @@ import project.nhom13.newsfeed.NewsHeader;
  * Created by WILL on 11/18/2016.
  */
 
-public class RSSParser extends AsyncTask<String,Void,Void> {
+public class RSSParser extends AsyncTask<String, Void, Void> {
     List<NewsHeader> list;
     int limit;
-    String site;
+    public static int threads_left;
 
-    public RSSParser(List<NewsHeader> list, int limit){
+    public RSSParser(List<NewsHeader> list, int limit) {
         this.list = list;
         this.limit = limit;
     }
 
     @Override
     protected Void doInBackground(String... params) {
-        /*String urlStr = params[0];
-        site = params[1];
+        String url = params[0];
+        String site = params[1];
 
+        RSSReader reader = new RSSReader();
         try {
-            URL url = new URL(urlStr);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            RSSFeed feed = reader.load(url);
+            List<RSSItem> items = feed.getItems();
 
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
+            int count = 0;
+            for (RSSItem item : items) {
+                NewsHeader header = new NewsHeader();
+                header.setUrl(item.getLink().toString());
+                header.setSite(site);
+                header.setTitle(item.getTitle());
+                header.setPreview(item.getDescription());
 
-            conn.connect();
-            InputStream stream = conn.getInputStream();
+                if(item.getPubDate()!=null){
+                    GregorianCalendar pubDate = new GregorianCalendar();
+                    pubDate.setTime(item.getPubDate());
+                    header.setPubDate(pubDate);
+                }else header.setPubDate(null);
 
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            XmlPullParser parser = factory.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(stream, null);
-
-
-            stream.close();
-        }catch (Exception e){
-
-        }*/
-
+                list.add(header);
+                count++;
+                if (count == limit) break;
+            }
+        } catch (RSSException | RSSFault e) {
+            e.printStackTrace();
+            return null;
+        }
 
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-
+        threads_left--;
     }
 }
