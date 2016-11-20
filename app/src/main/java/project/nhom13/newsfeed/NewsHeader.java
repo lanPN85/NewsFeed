@@ -1,5 +1,6 @@
 package project.nhom13.newsfeed;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
@@ -8,12 +9,13 @@ import java.util.GregorianCalendar;
  * Created by WILL on 11/15/2016.
  */
 
-public class NewsHeader implements Comparable<NewsHeader>{
+public class NewsHeader implements Comparable<NewsHeader>, Serializable{
     private String title;
     private GregorianCalendar pubDate;
     private String site;
     private String url;
     private String preview;
+    private boolean downloaded;
 
     public String getTitle() {
         return title;
@@ -54,6 +56,13 @@ public class NewsHeader implements Comparable<NewsHeader>{
     }
     public void setPreview(String preview) {
         this.preview = preview.trim();
+    }
+
+    public boolean isDownloaded() {
+        return downloaded;
+    }
+    public void setDownloaded(boolean downloaded) {
+        this.downloaded = downloaded;
     }
 
     @Override

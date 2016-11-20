@@ -5,16 +5,31 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorAccent"
-    android:padding="7dp">
+    android:padding="7dp"
+    >
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/article_source"
-        android:textAlignment="textEnd"
-        android:layout_gravity="end"
-        android:textColor="@color/colorTextPrimary"
-        android:textSize="12sp" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/download_note"
+            android:layout_weight="1"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/article_source"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="12sp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -33,20 +48,23 @@
         android:textAlignment="textStart"
         android:layout_gravity="start"
         android:textStyle="normal|bold"
-        android:textColor="@color/colorTextPrimary" />
+        android:textColor="@color/colorTextPrimary"
+        />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/article_image"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/article_preview2"
         android:textSize="12sp"
-        android:textColor="@color/colorTextSecondary" />
+        android:textColor="@color/colorTextSecondary"
+        />
 
 </LinearLayout>

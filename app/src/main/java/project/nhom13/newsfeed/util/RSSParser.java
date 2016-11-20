@@ -19,12 +19,14 @@ import project.nhom13.newsfeed.NewsHeader;
 
 public class RSSParser extends AsyncTask<String, Void, Void> {
     List<NewsHeader> list;
+    List<String> articles;
     int limit;
     public static int threads_left;
 
-    public RSSParser(List<NewsHeader> list, int limit) {
+    public RSSParser(List<NewsHeader> list, List<String> articles, int limit) {
         this.list = list;
         this.limit = limit;
+        this.articles = articles;
     }
 
     @Override
@@ -44,6 +46,9 @@ public class RSSParser extends AsyncTask<String, Void, Void> {
                 header.setSite(site);
                 header.setTitle(item.getTitle());
                 header.setPreview(item.getDescription());
+
+                boolean downloaded = (articles.contains(header.getUrl()));
+                header.setDownloaded(downloaded);
 
                 if(item.getPubDate()!=null){
                     GregorianCalendar pubDate = new GregorianCalendar();

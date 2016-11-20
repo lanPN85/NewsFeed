@@ -1,5 +1,6 @@
 package project.nhom13.newsfeed;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -9,6 +10,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -32,6 +34,8 @@ import project.nhom13.newsfeed.util.ImageGetter;
 import project.nhom13.newsfeed.util.RSSParser;
 
 public class Main extends AppCompatActivity {
+    public static final int ARTICLE_CACHE_SIZE = 10;
+
     private ProgressBar loading;
     private TextView topic;
     private ListView listView;
@@ -79,12 +83,58 @@ public class Main extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NewsHeader header = model.get(position);
-                String url = header.getUrl();
+                Bundle bundle = new Bundle();
+                ArrayList<String> manifest = new ArrayList<String>(ARTICLE_CACHE_SIZE);
+                for(int i=0;i<ARTICLE_CACHE_SIZE;i++){
+                    String key = "k" + i;
+                    NewsHeader h = model.get((position+i)%model.size());
+                    bundle.putSerializable(key,h);
+                    manifest.add(key);
+                }
+                bundle.putStringArrayList("manifest",manifest);
 
                 Intent intent = new Intent(Main.this, ArticleViewActivity.class);
-                intent.putExtra("url",url);
+                intent.putExtra("bundle",bundle);
                 startActivity(intent);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
+                final NewsHeader header = model.get(position);
+                String to_download = (header.isDownloaded())?getString(R.string.action_remove):getString(R.string.action_download);
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                AlertDialog dialog;
+                builder.setTitle(header.getTitle())
+                        .setItems(new CharSequence[]{to_download,"Quay lại"},
+                                new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case 0:
+                                        if(!header.isDownloaded()){
+                                            Intent intent = new Intent(getApplicationContext(), DownloadService.class);
+                                            intent.putExtra(DownloadService.HEADER_EXTRA,header);
+                                            startService(intent);
+                                            Toast toast = Toast.makeText(getApplicationContext(),
+                                                    getString(R.string.notify_download_start),Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }else{
+
+                                        }
+                                        dialog.dismiss();
+                                        break;
+                                    case 1:
+                                        dialog.dismiss();
+                                        break;
+                                }
+                            }
+                        });
+                dialog = builder.create();
+                dialog.show();
+                return true;
             }
         });
 
@@ -175,21 +225,48 @@ public class Main extends AppCompatActivity {
     }
 
     private void getHeaders(){
-        if(!isNetworkAvailable()){
-            Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
-            toast.show();
-            return;
-        }
-
         model = new ArrayList<NewsHeader>(50);
+        List<String> downloaded_articles = new ArrayList<String>(30);
         FeedDBHelper helper = new FeedDBHelper(this,null,FeedDBHelper.DB_VERSION);
         Cursor cursor;
+
+        cursor = helper.select_article_all();
+        while (cursor.moveToNext()){
+            downloaded_articles.add(helper.getURl(cursor));
+        }
 
         if(current_topic.equals("downloaded")){
             //TODO Add downloaded query
             RSSParser.threads_left = 0;
+            listView.setAdapter(null);
+            if(!cursor.moveToFirst()) {
+                helper.close();
+                return;
+            }
+            loading.setVisibility(View.VISIBLE);
+            do{
+                NewsHeader header = new NewsHeader();
+                header.setUrl(helper.getArticleUrl(cursor));
+                header.setTitle(helper.getArticleTitle(cursor));
+                header.setPubDate(helper.getArticleDate(cursor));
+                header.setSite(helper.getArticleSite(cursor));
+                header.setPreview(helper.getArticlePreview(cursor));
+                header.setDownloaded(true);
+                model.add(header);
+            }while(cursor.moveToNext());
+            loading.setVisibility(View.GONE);
 
+            adapter = new HeaderAdapter();
+            listView.setAdapter(adapter);
+            return;
         }else{
+            if(!isNetworkAvailable()){
+                Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
+                toast.show();
+                helper.close();
+                return;
+            }
+
             if(current_topic.equals("favorite")){
                 cursor = helper.select_fav();
             }else{
@@ -199,10 +276,15 @@ public class Main extends AppCompatActivity {
             RSSParser.threads_left = feed_count;
             while (cursor.moveToNext()){
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                int total_limit = Integer.parseInt(prefs.getString("load_amount","30"));
-                int feed_limit = (int)Math.ceil((double)total_limit/(double)feed_count);
+                int total_limit,feed_limit;
+                try{
+                    total_limit = Integer.parseInt(prefs.getString("load_amount","30"));
+                    feed_limit = (int)Math.ceil((double)total_limit/(double)feed_count);
+                }catch (NumberFormatException e){
+                    feed_limit = Integer.MAX_VALUE;
+                }
 
-                RSSParser parser = new RSSParser(model,feed_limit);
+                RSSParser parser = new RSSParser(model,downloaded_articles,feed_limit);
                 parser.execute(helper.getURl(cursor),helper.getSite(cursor));
             }
 
@@ -235,13 +317,12 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        while (RSSParser.threads_left>0){
+        while (RSSParser.threads_left > 0){
         }
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Collections.shuffle(model);
                 Collections.sort(model);
                 loading.setVisibility(View.GONE);
                 listView.setAdapter(adapter);
@@ -280,6 +361,7 @@ public class Main extends AppCompatActivity {
         private TextView title;
         private TextView preview2;
         private ImageView image;
+        private ImageView download;
 
         HeaderHolder(View row){
             source = (TextView)row.findViewById(R.id.article_source);
@@ -287,6 +369,7 @@ public class Main extends AppCompatActivity {
             title = (TextView)row.findViewById(R.id.article_title);
             preview2 = (TextView)row.findViewById(R.id.article_preview2);
             image = (ImageView)row.findViewById(R.id.article_image);
+            download = (ImageView)row.findViewById(R.id.download_note);
         }
 
         void populateFrom(NewsHeader header){
@@ -294,6 +377,7 @@ public class Main extends AppCompatActivity {
             date.setText(header.getPubDateAsString());
             title.setText(header.getTitle());
             preview2.setText(Html.fromHtml(header.getPreview(), new ImageGetter(image),null));
+            if(header.isDownloaded()) download.setImageResource(R.drawable.downloadedicon2);
         }
     }
 }

@@ -17,7 +17,7 @@ import android.widget.ToggleButton;
 import project.nhom13.newsfeed.util.ListViewUtil;
 
 public class RSSPrefs extends AppCompatActivity {
-    private static final int FEED_COUNT = 7;
+    public static final int FEED_COUNT = 7;
 
     private FeedDBHelper helper;
 

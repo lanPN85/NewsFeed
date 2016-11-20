@@ -1,25 +1,25 @@
 package project.nhom13.newsfeed;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
 
 public class ArticleViewActivity extends AppCompatActivity {
     private ProgressBar loading;
     private WebView webView;
+    private ArrayList<String> manifest;
+    private ArrayList<NewsHeader> headers;
+    private int article_index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,43 @@ public class ArticleViewActivity extends AppCompatActivity {
         loading = (ProgressBar)findViewById(R.id.article_progress);
 
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
+        Bundle bundle = intent.getBundleExtra("bundle");
+        manifest = bundle.getStringArrayList("manifest");
+        headers = new ArrayList<NewsHeader>(Main.ARTICLE_CACHE_SIZE);
+        for(String key : manifest){
+            headers.add((NewsHeader)bundle.getSerializable(key));
+        }
+
+        article_index = 0;
 
         webView = (WebView)findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
+        loadHtml();
+    }
+
+    private void loadHtml(){
+        webView.stopLoading();
+        if(!isNetworkAvailable()){
+            Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
+        String url = headers.get(article_index).getUrl();
         webView.loadUrl(url);
+    }
+
+    private void nextArticle(){
+        if(article_index<headers.size()-1){
+            article_index++;
+            loadHtml();
+        }
+    }
+
+    private void prevArticle(){
+        if(article_index>0){
+            article_index--;
+            loadHtml();
+        }
     }
 
     @Override
@@ -53,33 +85,26 @@ public class ArticleViewActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings2:
+                Intent intent = new Intent(ArticleViewActivity.this,Preferences.class);
+                startActivity(intent);
                 return true;
-
+            case R.id.action_download:
+                return true;
+            case R.id.next:
+                nextArticle();
+                return true;
+            case R.id.prev:
+                prevArticle();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public static String getHtml(String url) throws IOException {
-        // Build and set timeout values for the request.
-        URLConnection connection = (new URL(url)).openConnection();
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
-        connection.connect();
-
-        // Read and store the result line by line then return the entire string.
-        InputStream in = connection.getInputStream();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder html = new StringBuilder();
-        for (String line; (line = reader.readLine()) != null; ) {
-            html.append(line);
-        }
-        in.close();
-
-        return html.toString();
+    private boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo info = cm.getActiveNetworkInfo();
+        return (info != null);
     }
 
-    public void toHome(View view){
-
-    }
 }

@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 
 public class FeedDBHelper extends SQLiteOpenHelper {
     public static final int DB_VERSION = 8;
@@ -169,8 +174,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
-    public void add_article(String url, String site, String date, String title, String preview) {
+    public void add_article(String html, String url, String site, String date, String title, String preview) {
         ContentValues values = new ContentValues(5);
+        values.put(COLUMN_ARTICLE_HTML, html);
         values.put(COLUMN_ARTICLE_URL, url);
         values.put(COLUMN_ARTICLE_SITE, site);
         values.put(COLUMN_ARTICLE_DATE, date);
@@ -178,7 +184,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_ARTICLE_PREVIEW, preview);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insert(ARTICLES_TABLE_NAME, null, values);
+        db.insertWithOnConflict(ARTICLES_TABLE_NAME, null, values,SQLiteDatabase.CONFLICT_IGNORE);
         db.close();
     }
 
@@ -274,10 +280,11 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
 
     public Cursor select_article_all (){
-        String query = "Select " + COLUMN_ARTICLE_URL + COLUMN_ARTICLE_SITE+
-                COLUMN_ARTICLE_DATE+
-                COLUMN_ARTICLE_TITLE +
-                COLUMN_ARTICLE_PREVIEW+
+        String query = "Select " + COLUMN_ARTICLE_URL + "," +
+                COLUMN_ARTICLE_SITE + "," +
+                COLUMN_ARTICLE_DATE + "," +
+                COLUMN_ARTICLE_TITLE + "," +
+                COLUMN_ARTICLE_PREVIEW +
                 " FROM " + ARTICLES_TABLE_NAME ;
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -285,7 +292,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         return cursor;
     }
     public Cursor select_article_html (String url){
-        String query = "Select " + COLUMN_ARTICLE_HTML+
+        String query = "Select " + COLUMN_ARTICLE_HTML +
                 " FROM " + ARTICLES_TABLE_NAME + " WHERE "
                 + COLUMN_ARTICLE_URL +" = \" "+ url + "\"";
 
@@ -307,4 +314,31 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         return c.getInt(4);
     }
 
+    public String getArticleUrl(Cursor c){
+        return c.getString(0);
+    }
+    public String getArticleSite(Cursor c){
+        return c.getString(1);
+    }
+    public GregorianCalendar getArticleDate(Cursor c){
+        String d = c.getString(2);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try{
+            Date d2 = format.parse(d);
+            GregorianCalendar date = new GregorianCalendar();
+            date.setTime(d2);
+            return date;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public String getArticleTitle(Cursor c){
+        return c.getString(3);
+    }
+    public String getArticlePreview(Cursor c){
+        return c.getString(4);
+    }
+    public String getArticleHtml(Cursor c){
+        return c.getString(5);
+    }
 }
