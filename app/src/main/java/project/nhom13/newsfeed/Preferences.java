@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import project.nhom13.newsfeed.util.AppCompatPreferenceActivity;
+
 /**
  * Created by WILL on 11/16/2016.
  */

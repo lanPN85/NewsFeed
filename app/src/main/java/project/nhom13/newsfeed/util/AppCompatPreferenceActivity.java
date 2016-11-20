@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.util;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

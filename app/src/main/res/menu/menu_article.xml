@@ -16,14 +16,11 @@
         android:id="@+id/prev"
         app:showAsAction="ifRoom"
         android:icon="@drawable/leftarrow"
-        tools:ignore="MenuTitle" />
-    <item android:title=""
+        tools:ignore="MenuTitle"
+        android:title="@string/action_prev_article" />
+    <item android:title="@string/action_next_article"
         android:id="@+id/next"
         app:showAsAction="ifRoom"
         android:icon="@drawable/rightarrow"
         android:showAsAction="ifRoom" />
-    <item
-        android:title="Trang chủ"
-        android:id="@+id/home"
-        app:showAsAction="never" />
 </menu>

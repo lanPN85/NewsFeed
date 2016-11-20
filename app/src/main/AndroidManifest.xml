@@ -22,7 +22,8 @@
         </activity>
 
         <activity android:name=".ArticleViewActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.WActionBar"
+            android:parentActivityName=".Main">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.APP_BROWSER" />
@@ -43,6 +44,15 @@
         <activity android:name=".AddDialog"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:label="@string/action_add">
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".EditDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
                 <category android:name="android.intent.category.PREFERENCE" />

@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 
 public class FeedDBHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 8;
+    public static final int DB_VERSION = 9;
     private static final String DB_NAME = "feeds.db";
 
     public static final String RSS_TABLE_NAME = "rss";
@@ -151,7 +151,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + RSS_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + ARTICLES_TABLE_NAME);
+        //db.execSQL("DROP TABLE IF EXISTS " + ARTICLES_TABLE_NAME);
         onCreate(db);
     }
 
@@ -174,6 +174,40 @@ public class FeedDBHelper extends SQLiteOpenHelper {
         db.close();
         return true;
     }
+
+    public boolean edit_rss(String url, String site, String topic){
+        ContentValues values = new ContentValues(3);
+        values.put(COLUMN_URL, url);
+        values.put(COLUMN_SITE, site);
+        values.put(COLUMN_TOPIC, topic);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            db.update(RSS_TABLE_NAME,values,COLUMN_ARTICLE_URL + " = \"" + url + "\"",null);
+            db.close();
+            return true;
+        }catch (Exception e){
+            db.close();
+            return false;
+        }
+    }
+
+    public boolean delete_rss (String url) {
+        boolean result = false;
+        String query = "Select * FROM " +RSS_TABLE_NAME + " WHERE " +
+                COLUMN_URL + " = \"" + url + "\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            db.delete(RSS_TABLE_NAME, COLUMN_URL + " = \""+ url + "\"", null );
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
+
     public void add_article(String html, String url, String site, String date, String title, String preview) {
         ContentValues values = new ContentValues(5);
         values.put(COLUMN_ARTICLE_HTML, html);
@@ -294,7 +328,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     public Cursor select_article_html (String url){
         String query = "Select " + COLUMN_ARTICLE_HTML +
                 " FROM " + ARTICLES_TABLE_NAME + " WHERE "
-                + COLUMN_ARTICLE_URL +" = \" "+ url + "\"";
+                + COLUMN_ARTICLE_URL +" = \""+ url + "\"";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query,null);
@@ -306,6 +340,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
     public String getSite(Cursor c){
         return c.getString(1);
+    }
+    public String getTopic(Cursor c){
+        return c.getString(2);
     }
     public int getActive(Cursor c){
         return c.getInt(3);
@@ -322,7 +359,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
     public GregorianCalendar getArticleDate(Cursor c){
         String d = c.getString(2);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         try{
             Date d2 = format.parse(d);
             GregorianCalendar date = new GregorianCalendar();
@@ -337,8 +374,5 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
     public String getArticlePreview(Cursor c){
         return c.getString(4);
-    }
-    public String getArticleHtml(Cursor c){
-        return c.getString(5);
     }
 }

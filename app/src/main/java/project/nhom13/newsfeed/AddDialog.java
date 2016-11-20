@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -45,7 +46,9 @@ public class AddDialog extends Activity {
         EditText nameView = (EditText) findViewById(R.id.add_rss_name);
         Spinner topicView = (Spinner) findViewById(R.id.add_rss_topic);
         Switch isFavView = (Switch) findViewById(R.id.favorite_switch);
+        ProgressBar loading = (ProgressBar) findViewById(R.id.adding);
 
+        loading.setVisibility(View.VISIBLE);
         String url = urlView.getText().toString();
         if(!validateURL(url)){
             failureToast1.show();
@@ -66,6 +69,7 @@ public class AddDialog extends Activity {
         boolean b = helper.add_rss(url,name,topic,isFav);
         if(b) successToast.show();
         helper.close();
+        loading.setVisibility(View.GONE);
         return;
     }
 

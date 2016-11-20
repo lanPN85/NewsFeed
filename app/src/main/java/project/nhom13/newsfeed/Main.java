@@ -121,8 +121,16 @@ public class Main extends AppCompatActivity {
                                             Toast toast = Toast.makeText(getApplicationContext(),
                                                     getString(R.string.notify_download_start),Toast.LENGTH_SHORT);
                                             toast.show();
+                                            getHeaders();
                                         }else{
+                                            FeedDBHelper helper = new FeedDBHelper(getApplicationContext(),null,FeedDBHelper.DB_VERSION);
+                                            helper.delete_article(header.getUrl());
+                                            helper.close();
 
+                                            Toast toast = Toast.makeText(getApplicationContext(),
+                                                    getString(R.string.notify_delete),Toast.LENGTH_SHORT);
+                                            toast.show();
+                                            getHeaders();
                                         }
                                         dialog.dismiss();
                                         break;

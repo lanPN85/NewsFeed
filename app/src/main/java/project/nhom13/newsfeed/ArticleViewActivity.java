@@ -1,6 +1,7 @@
 package project.nhom13.newsfeed;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -40,32 +41,43 @@ public class ArticleViewActivity extends AppCompatActivity {
 
         webView = (WebView)findViewById(R.id.webview);
         webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setJavaScriptEnabled(false);
         loadHtml();
     }
 
     private void loadHtml(){
+        NewsHeader header = headers.get(article_index);
         webView.stopLoading();
+
         if(!isNetworkAvailable()){
+            if(header.isDownloaded()){
+                FeedDBHelper helper = new FeedDBHelper(this,null,FeedDBHelper.DB_VERSION);
+                Cursor cursor = helper.select_article_html(header.getUrl());
+                if(cursor.moveToFirst()){
+                    String html = cursor.getString(0);
+                    webView.loadData(html,"text/html; charset='utf-8'",null);
+                    helper.close();
+                    return;
+                }
+                helper.close();
+            }
+
             Toast toast = Toast.makeText(getApplicationContext(),getResources().getString(R.string.notify_no_network),Toast.LENGTH_LONG);
             toast.show();
             return;
         }
-        String url = headers.get(article_index).getUrl();
+        String url = header.getUrl();
         webView.loadUrl(url);
     }
 
     private void nextArticle(){
-        if(article_index<headers.size()-1){
-            article_index++;
+            article_index = (article_index+1)%headers.size();
             loadHtml();
-        }
     }
 
     private void prevArticle(){
-        if(article_index>0){
-            article_index--;
+            article_index = (article_index>0)?(article_index-1):(headers.size()-1);
             loadHtml();
-        }
     }
 
     @Override
@@ -89,6 +101,16 @@ public class ArticleViewActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_download:
+                if(headers.get(article_index).isDownloaded()){
+                    Toast.makeText(this,getString(R.string.notify_download_redundant),Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent2 = new Intent(getApplicationContext(), DownloadService.class);
+                    intent2.putExtra(DownloadService.HEADER_EXTRA,headers.get(article_index));
+                    startService(intent2);
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.notify_download_start),Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 return true;
             case R.id.next:
                 nextArticle();

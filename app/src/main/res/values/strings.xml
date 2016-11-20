@@ -8,7 +8,9 @@
     <string name="action_download">Tải về</string>
     <string name="action_remove">Xóa</string>
     <string name="action_add_favorite">Thêm vào yêu thích</string>
-    <string name="action_remove_favorite">Thêm vào yêu thích</string>
+    <string name="action_remove_favorite">Xóa khỏi yêu thích</string>
+    <string name="action_next_article">Bài tiếp theo</string>
+    <string name="action_prev_article">Bài trước</string>
 
     <string name="latest_label">Tin mới</string>
     <string name="world_label">Quốc tế</string>
@@ -30,7 +32,9 @@
     <string name="request_rss_topic">Chủ đề: </string>
     <string name="request_rss_favorite">Yêu thích: </string>
     <string name="request_confirm">Thêm RSS</string>
+    <string name="request_save">Lưu</string>
     <string name="request_cancel">Quay lại</string>
+    <string name="request_delete_rss">Xóa RSS</string>
 
     <string name="notify_changes_saved">Các thay đổi đã được lưu</string>
     <string name="notify_no_network">Không có kết nối mạng</string>
@@ -40,6 +44,10 @@
     <string name="notify_download_start">Đang tải</string>
     <string name="notify_download_success">Đã tải xong</string>
     <string name="notify_download_failure">Tải không thành công</string>
+    <string name="notify_download_redundant">Bài viết đã được tải</string>
+    <string name="notify_delete">Đã xóa</string>
     <string name="notify_general_error">Đã có lỗi xảy ra</string>
+    <string name="notify_loading_page">Đang tải trang</string>
 
+    <string name="delete_warning">Chắc chắn xóa nguồn tin này ?\n(Bạn sẽ không thể bật lại trong News Feed) </string>
 </resources>

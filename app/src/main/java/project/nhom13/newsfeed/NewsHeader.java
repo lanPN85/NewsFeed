@@ -55,6 +55,10 @@ public class NewsHeader implements Comparable<NewsHeader>, Serializable{
         return preview;
     }
     public void setPreview(String preview) {
+        if(preview==null){
+            this.preview = null;
+            return;
+        }
         this.preview = preview.trim();
     }
 

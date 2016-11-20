@@ -26,7 +26,7 @@ public class ListViewUtil {
             }
 
             // Get total height of all item dividers.
-            int totalDividersHeight = listView.getDividerHeight() * (numberOfItems - 1);
+            int totalDividersHeight = listView.getDividerHeight() * (numberOfItems);
 
             // Set list height.
             ViewGroup.LayoutParams params = listView.getLayoutParams();
