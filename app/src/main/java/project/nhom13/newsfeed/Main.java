@@ -384,7 +384,11 @@ public class Main extends AppCompatActivity {
             source.setText(header.getSite());
             date.setText(header.getPubDateAsString());
             title.setText(header.getTitle());
-            preview2.setText(Html.fromHtml(header.getPreview(), new ImageGetter(image),null));
+            image.setImageDrawable(null);
+            if(header.getThumbnail()!=null){
+                image.setImageBitmap(header.getThumbnail());
+            }
+            preview2.setText(Html.fromHtml(header.getPreview(), new ImageGetter(image), null));
             if(header.isDownloaded()) download.setImageResource(R.drawable.downloadedicon2);
         }
     }

@@ -2,12 +2,14 @@ package project.nhom13.newsfeed;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -37,12 +39,34 @@ public class ArticleViewActivity extends AppCompatActivity {
             headers.add((NewsHeader)bundle.getSerializable(key));
         }
 
-        article_index = 0;
+        if(savedInstanceState==null){
+            article_index = 0;
+        }else {
+            article_index = savedInstanceState.getInt("index",0);
+        }
 
         webView = (WebView)findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
-        webView.getSettings().setJavaScriptEnabled(false);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                loading.setVisibility(View.VISIBLE);
+                webView.setVisibility(View.GONE);
+            }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                loading.setVisibility(View.GONE);
+                webView.setVisibility(View.VISIBLE);
+                super.onPageFinished(view, url);
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
         loadHtml();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("index",article_index);
     }
 
     private void loadHtml(){

@@ -1,13 +1,19 @@
 package project.nhom13.newsfeed.util;
 
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import org.mcsoxford.rss.MediaThumbnail;
 import org.mcsoxford.rss.RSSException;
 import org.mcsoxford.rss.RSSFault;
 import org.mcsoxford.rss.RSSFeed;
 import org.mcsoxford.rss.RSSItem;
 import org.mcsoxford.rss.RSSReader;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -18,6 +24,7 @@ import project.nhom13.newsfeed.NewsHeader;
  */
 
 public class RSSParser extends AsyncTask<String, Void, Void> {
+    //TODO Improve compatibility for dates & images
     List<NewsHeader> list;
     List<String> articles;
     int limit;
@@ -46,6 +53,22 @@ public class RSSParser extends AsyncTask<String, Void, Void> {
                 header.setSite(site);
                 header.setTitle(item.getTitle());
                 header.setPreview(item.getDescription());
+                List<MediaThumbnail> thumbnails = item.getThumbnails();
+                if(thumbnails!=null && !thumbnails.isEmpty()){
+                    String img_url = thumbnails.get(0).getUrl().toString();
+                    InputStream is;
+                    BufferedInputStream bis;
+                    try{
+                        URLConnection conn = new URL(img_url).openConnection();
+                        conn.connect();
+                        is = conn.getInputStream();
+                        bis = new BufferedInputStream(is, 8192);
+                        header.setThumbnail(BitmapFactory.decodeStream(bis));
+                        bis.close(); is.close();
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
 
                 boolean downloaded = (articles.contains(header.getUrl()));
                 header.setDownloaded(downloaded);

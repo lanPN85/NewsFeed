@@ -52,6 +52,7 @@ public class AddDialog extends Activity {
         String url = urlView.getText().toString();
         if(!validateURL(url)){
             failureToast1.show();
+            loading.setVisibility(View.GONE);
             return;
         }
         helper = new FeedDBHelper(this, null, FeedDBHelper.DB_VERSION);
@@ -59,6 +60,7 @@ public class AddDialog extends Activity {
         if(cursor.moveToFirst()){
             failureToast2.show();
             helper.close();
+            loading.setVisibility(View.GONE);
             return;
         }
         String name = nameView.getText().toString();

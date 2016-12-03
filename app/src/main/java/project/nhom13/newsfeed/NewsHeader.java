@@ -1,5 +1,7 @@
 package project.nhom13.newsfeed;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ public class NewsHeader implements Comparable<NewsHeader>, Serializable{
     private String site;
     private String url;
     private String preview;
+    private transient Bitmap thumbnail = null;
     private boolean downloaded;
 
     public String getTitle() {
@@ -67,6 +70,13 @@ public class NewsHeader implements Comparable<NewsHeader>, Serializable{
     }
     public void setDownloaded(boolean downloaded) {
         this.downloaded = downloaded;
+    }
+
+    public Bitmap getThumbnail() {
+        return thumbnail;
+    }
+    public void setThumbnail(Bitmap thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     @Override

@@ -52,7 +52,7 @@ public class ImageGetter implements Html.ImageGetter {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
+            if(imageView.getDrawable()==null) imageView.setImageBitmap(result);
         }
     }
 }
