@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,9 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import project.nhom13.newsfeed.R;
+import project.nhom13.newsfeed.model.FeedDBHelper;
 import project.nhom13.newsfeed.util.ListViewUtil;
 
-public class RSSPrefs extends AppCompatActivity {
+public class RSSPrefsActivity extends AppCompatActivity {
     public static final int FEED_COUNT = 7;
     public static final int EDIT_REQUEST_CODE = 13;
 
@@ -81,7 +83,7 @@ public class RSSPrefs extends AppCompatActivity {
 
     private class FeedAdapter extends CursorAdapter{
         FeedAdapter(Cursor cursor){
-            super(RSSPrefs.this,cursor,CursorAdapter.NO_SELECTION);
+            super(RSSPrefsActivity.this,cursor,CursorAdapter.NO_SELECTION);
         }
 
         @Override
@@ -112,7 +114,7 @@ public class RSSPrefs extends AppCompatActivity {
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(RSSPrefs.this,EditDialog.class);
+                    Intent intent = new Intent(RSSPrefsActivity.this,EditDialog.class);
                     Cursor cursor = helper.select_url(name.getText().toString());
                     if(!cursor.moveToFirst())
                         return;
@@ -135,7 +137,7 @@ public class RSSPrefs extends AppCompatActivity {
             name.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RSSPrefs.this,R.style.AppTheme_Dialog2);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RSSPrefsActivity.this,R.style.AppTheme_Dialog2);
                     AlertDialog dialog;
                     builder = builder
                             .setPositiveButton(R.string.action_remove, new DialogInterface.OnClickListener() {

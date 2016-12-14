@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.service;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -12,6 +12,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+
+import project.nhom13.newsfeed.R;
+import project.nhom13.newsfeed.model.NewsHeader;
+import project.nhom13.newsfeed.model.FeedDBHelper;
 
 /**
  * Created by WILL on 11/20/2016.

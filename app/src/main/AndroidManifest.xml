@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main"
+        <activity android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -21,27 +21,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ArticleViewActivity"
+        <activity android:name=".activity.ArticleViewActivity"
             android:theme="@style/AppTheme.WActionBar"
-            android:parentActivityName=".Main">
+            android:parentActivityName=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.APP_BROWSER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Preferences"
+        <activity android:name=".activity.PreferencesActivity"
             android:label="@string/title_activity_preferences" />
 
-        <activity android:name=".RSSPrefs"
-            android:label="@string/title_rss_preferences">
+        <activity android:name=".activity.RSSPrefsActivity"
+            android:label="@string/title_rss_preferences"
+            android:parentActivityName=".activity.PreferencesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddDialog"
+        <activity android:name=".activity.AddDialog"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:label="@string/action_add">
             <intent-filter>
@@ -50,7 +51,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditDialog"
+        <activity android:name=".activity.EditDialog"
             android:theme="@style/Theme.AppCompat.Dialog"
             android:label="">
             <intent-filter>
@@ -59,7 +60,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".DownloadService"></service>
+        <service android:name=".service.DownloadService"></service>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@
     <string name="action_add">Thêm nguồn tin</string>
     <string name="action_refresh">Tải lại</string>
     <string name="action_download">Tải về</string>
+    <string name="action_search">Tìm kiếm</string>
     <string name="action_remove">Xóa</string>
     <string name="action_add_favorite">Thêm vào yêu thích</string>
     <string name="action_remove_favorite">Xóa khỏi yêu thích</string>

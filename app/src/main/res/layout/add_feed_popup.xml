@@ -11,7 +11,7 @@
     android:outlineProvider="background"
     android:padding="5dp"
 
-    tools:context=".AddDialog"
+    tools:context=".activity.AddDialog"
     app:layout_collapseParallaxMultiplier="1.0">
 
     <TableRow

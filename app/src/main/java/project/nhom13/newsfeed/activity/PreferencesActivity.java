@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -7,13 +7,14 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import project.nhom13.newsfeed.R;
 import project.nhom13.newsfeed.util.AppCompatPreferenceActivity;
 
 /**
  * Created by WILL on 11/16/2016.
  */
 
-public class Preferences extends AppCompatPreferenceActivity {
+public class PreferencesActivity extends AppCompatPreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

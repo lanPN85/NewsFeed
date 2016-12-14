@@ -10,7 +10,7 @@
     android:elevation="10dp"
     android:outlineProvider="background"
     android:padding="5dp"
-    tools:context=".EditDialog"
+    tools:context=".activity.EditDialog"
     app:layout_collapseParallaxMultiplier="1.0">
 
     <TableRow

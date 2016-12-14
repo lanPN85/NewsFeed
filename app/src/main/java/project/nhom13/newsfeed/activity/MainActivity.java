@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,17 +32,26 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
+import project.nhom13.newsfeed.R;
+import project.nhom13.newsfeed.model.FeedDBHelper;
+import project.nhom13.newsfeed.model.NewsHeader;
+import project.nhom13.newsfeed.service.DownloadService;
 import project.nhom13.newsfeed.util.ImageGetter;
 import project.nhom13.newsfeed.util.RSSParser;
 
-public class Main extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     public static final int ARTICLE_CACHE_SIZE = 10;
 
     private ProgressBar loading;
     private TextView topic;
     private ListView listView;
     private NavigationView nav_view;
+    private LinearLayout searchPanel;
+    private EditText searchQuery;
+    private ImageButton searchConfirm;
+    private ImageButton searchCancel;
 
     private String current_topic;
     private List<NewsHeader> model = null;
@@ -54,6 +66,29 @@ public class Main extends AppCompatActivity {
 
         topic = (TextView) findViewById(R.id.topic_view);
         listView = (ListView) findViewById(R.id.article_list);
+
+        searchPanel = (LinearLayout) findViewById(R.id.search_panel);
+        searchQuery = (EditText) findViewById(R.id.search_query);
+        searchConfirm = (ImageButton) findViewById(R.id.search_confirm);
+        searchCancel = (ImageButton) findViewById(R.id.search_cancel);
+
+        searchConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = searchQuery.getText().toString();
+                searchQuery.clearFocus();
+                search(query);
+                searchPanel.setVisibility(View.GONE);
+            }
+        });
+
+        searchCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchQuery.clearFocus();
+                searchPanel.setVisibility(View.GONE);
+            }
+        });
 
         if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             nav_view = (NavigationView) findViewById(R.id.nav_view);
@@ -93,7 +128,7 @@ public class Main extends AppCompatActivity {
                 }
                 bundle.putStringArrayList("manifest",manifest);
 
-                Intent intent = new Intent(Main.this, ArticleViewActivity.class);
+                Intent intent = new Intent(MainActivity.this, ArticleViewActivity.class);
                 intent.putExtra("bundle",bundle);
                 startActivity(intent);
             }
@@ -154,6 +189,8 @@ public class Main extends AppCompatActivity {
         savedInstanceState.putString("current_topic",current_topic);
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -168,18 +205,21 @@ public class Main extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings:
-                Intent intent = new Intent(Main.this,Preferences.class);
+                Intent intent = new Intent(MainActivity.this,PreferencesActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_add:
-                Intent intent2 = new Intent(Main.this,AddDialog.class);
+                Intent intent2 = new Intent(MainActivity.this,AddDialog.class);
                 startActivity(intent2);
                 return true;
             case R.id.action_refresh:
                 getHeaders();
+                return true;
+            case R.id.action_search:
+                searchPanel.setVisibility(View.VISIBLE);
+                searchQuery.requestFocus();
                 return true;
 
             case R.id.item_latest:
@@ -230,6 +270,26 @@ public class Main extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void search(String query){
+        if(model==null) return;
+        listView.setAdapter(null);
+
+        List<NewsHeader> searchModel = new ArrayList<NewsHeader>(model.size());
+        Locale vie = new Locale("vie");
+
+        for(NewsHeader header : model){
+            if(!header.getTitle().toLowerCase(vie).contains(query.toLowerCase(vie)) &&
+                    !header.getPreview().toLowerCase(vie).contains(query.toLowerCase(vie)) &&
+                    !header.getSite().toLowerCase(vie).contains(query.toLowerCase(vie)))
+                continue;
+            searchModel.add(header);
+        }
+
+        model = searchModel;
+        adapter = new HeaderAdapter();
+        listView.setAdapter(adapter);
     }
 
     private void getHeaders(){
@@ -339,8 +399,9 @@ public class Main extends AppCompatActivity {
     }
 
     private class HeaderAdapter extends ArrayAdapter<NewsHeader>{
+
         HeaderAdapter(){
-            super(Main.this,R.layout.article_item,model);
+            super(MainActivity.this,R.layout.article_item,model);
         }
 
         @Override
@@ -383,8 +444,10 @@ public class Main extends AppCompatActivity {
         void populateFrom(NewsHeader header){
             source.setText(header.getSite());
             date.setText(header.getPubDateAsString());
-            title.setText(header.getTitle());
+            title.setText(Html.fromHtml(header.getTitle(),null,null));
             image.setImageDrawable(null);
+            download.setImageDrawable(null);
+
             if(header.getThumbnail()!=null){
                 image.setImageBitmap(header.getThumbnail());
             }

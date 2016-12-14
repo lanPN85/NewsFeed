@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.model;
 
 import android.graphics.Bitmap;
 

@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.activity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +17,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import project.nhom13.newsfeed.service.DownloadService;
+import project.nhom13.newsfeed.R;
+import project.nhom13.newsfeed.model.NewsHeader;
+import project.nhom13.newsfeed.model.FeedDBHelper;
+
 public class ArticleViewActivity extends AppCompatActivity {
     private ProgressBar loading;
     private WebView webView;
@@ -34,7 +39,7 @@ public class ArticleViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("bundle");
         manifest = bundle.getStringArrayList("manifest");
-        headers = new ArrayList<NewsHeader>(Main.ARTICLE_CACHE_SIZE);
+        headers = new ArrayList<NewsHeader>(MainActivity.ARTICLE_CACHE_SIZE);
         for(String key : manifest){
             headers.add((NewsHeader)bundle.getSerializable(key));
         }
@@ -121,7 +126,7 @@ public class ArticleViewActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_settings2:
-                Intent intent = new Intent(ArticleViewActivity.this,Preferences.class);
+                Intent intent = new Intent(ArticleViewActivity.this,PreferencesActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.action_download:

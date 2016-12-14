@@ -1,14 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="project.nhom13.newsfeed.Main">
+    tools:context="project.nhom13.newsfeed.activity.MainActivity">
     <item android:title=""
         android:orderInCategory="90"
         android:id="@+id/blank" />
+    <item
+        android:id="@+id/action_search"
+        app:showAsAction="always"
+        android:title="@string/action_search"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_search" />
     <item android:title="@string/action_refresh"
         android:id="@+id/action_refresh"
         android:orderInCategory="98"
-        android:icon="@android:drawable/ic_popup_sync"
+        android:icon="@android:drawable/ic_menu_rotate"
         app:showAsAction="always" />
     <item android:title="@string/action_add"
         android:orderInCategory="99"
@@ -18,7 +24,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="97"
         android:title="@string/action_settings"
         android:enabled="true"
         app:showAsAction="ifRoom"

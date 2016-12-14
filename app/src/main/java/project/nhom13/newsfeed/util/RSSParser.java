@@ -17,7 +17,7 @@ import java.net.URLConnection;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import project.nhom13.newsfeed.NewsHeader;
+import project.nhom13.newsfeed.model.NewsHeader;
 
 /**
  * Created by WILL on 11/18/2016.

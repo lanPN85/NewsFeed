@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
 
-    tools:context="project.nhom13.newsfeed.Main"
+    tools:context="project.nhom13.newsfeed.activity.MainActivity"
     android:id="@+id/main_layout">
 
     <android.support.design.widget.NavigationView
@@ -32,6 +32,36 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/search_panel"
+            android:visibility="gone">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:ems="10"
+                android:id="@+id/search_query"
+                android:layout_weight="1"
+                android:textSize="14sp" />
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                app:srcCompat="@android:drawable/ic_menu_search"
+                android:background="@null"
+                android:id="@+id/search_confirm" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                app:srcCompat="@android:drawable/ic_delete"
+                android:background="@null"
+                android:id="@+id/search_cancel" />
+        </LinearLayout>
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -51,7 +81,7 @@
             android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:text="@string/latest_label"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/colorTextPrimary"
             android:textIsSelectable="false"

@@ -1,4 +1,4 @@
-package project.nhom13.newsfeed;
+package project.nhom13.newsfeed.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import project.nhom13.newsfeed.R;
 
 
 public class FeedDBHelper extends SQLiteOpenHelper {
