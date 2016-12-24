@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Tin Tức</string>
     <string name="download_service_name">Tin Tức - Tải tin</string>
+    <string name="about_us_text">
+        Bài tập lớn - Lập trình Android - 20161\n\n
+        Giảng viên hướng dẫn: Trần Hải Anh\n
+        Nhóm 13:\n
+        Phan Ngọc Lân - 20142505\n
+        Lê Thành Lợi - 20142729
+    </string>
 
     <string name="action_settings">Tùy chọn</string>
     <string name="action_add">Thêm nguồn tin</string>
@@ -26,6 +33,7 @@
     <string name="load_more">Hiện bài cũ hơn</string>
     <string name="title_activity_preferences">Tùy Chọn</string>
     <string name="title_rss_preferences">RSS</string>
+    <string name="title_about_us">Thông tin ứng dụng</string>
 
     <string name="request_rss_url">RSS: </string>
     <string name="request_rss_name">Tên kênh: </string>

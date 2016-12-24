@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="project.nhom13.newsfeed">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,55 +12,71 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"
+        <activity
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.ArticleViewActivity"
-            android:theme="@style/AppTheme.WActionBar"
-            android:parentActivityName=".activity.MainActivity">
+        <activity
+            android:name=".activity.ArticleViewActivity"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/AppTheme.WActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.APP_BROWSER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.PreferencesActivity"
+        <activity
+            android:name=".activity.PreferencesActivity"
             android:label="@string/title_activity_preferences" />
-
-        <activity android:name=".activity.RSSPrefsActivity"
+        <activity
+            android:name=".activity.RSSPrefsActivity"
             android:label="@string/title_rss_preferences"
             android:parentActivityName=".activity.PreferencesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.AddDialog"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:label="@string/action_add">
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:label="@string/title_about_us"
+            android:parentActivityName=".activity.PreferencesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.EditDialog"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:label="">
+        <activity
+            android:name=".activity.AddDialog"
+            android:label="@string/action_add"
+            android:theme="@style/Theme.AppCompat.Dialog">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
+                <category android:name="android.intent.category.PREFERENCE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.EditDialog"
+            android:label=""
+            android:theme="@style/Theme.AppCompat.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
 
-        <service android:name=".service.DownloadService"></service>
+        <service android:name=".service.DownloadService" />
     </application>
 
 </manifest>

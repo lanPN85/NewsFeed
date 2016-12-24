@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ import project.nhom13.newsfeed.R;
 
 
 public class FeedDBHelper extends SQLiteOpenHelper {
-    public static final int DB_VERSION = 9;
+    public static final int DB_VERSION = 13;
     private static final String DB_NAME = "feeds.db";
 
     public static final String RSS_TABLE_NAME = "rss";
@@ -60,6 +61,7 @@ public class FeedDBHelper extends SQLiteOpenHelper {
     }
 
     private void insertDefault(SQLiteDatabase db){
+        Log.d("","createNew");
         String query = "Select * FROM " + RSS_TABLE_NAME ;
         Cursor cursor = db.rawQuery(query,null);
 
@@ -152,8 +154,9 @@ public class FeedDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d("","onUpgrade");
+        db.execSQL("DROP TABLE IF EXISTS " + ARTICLES_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RSS_TABLE_NAME);
-        //db.execSQL("DROP TABLE IF EXISTS " + ARTICLES_TABLE_NAME);
         onCreate(db);
     }
 

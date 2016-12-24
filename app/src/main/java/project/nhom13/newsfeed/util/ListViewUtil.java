@@ -6,7 +6,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 /**
- * Created by WILL on 11/18/2016.
+ * By KishuDroid @ http://stackoverflow.com/questions/14020859/change-height-of-a-listview-dynamicallyandroid/35552949#35552949
  */
 
 public class ListViewUtil {

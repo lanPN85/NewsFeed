@@ -1,273 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="latest">
-        <item>
-            http://vnexpress.net/rss/thoi-su.rss
-        </item>
-        <item>
-           http://danviet.vn/rss/tin-tuc-1001.rss
-        </item>
-        <!--<item>
-            http://vietnamnet.vn/rss/moi-nong.rss
-        </item>
-        <item>
-            http://www.24h.com.vn/upload/rss/tintuctrongngay.rss
-        </item>
-        <item>
-            http://tuoitre.vn/rss/tt-tin-moi-nhat.rss
-        </item>-->
+        <item>http://vnexpress.net/rss/thoi-su.rss</item>
+        <item>http://danviet.vn/rss/tin-tuc-1001.rss</item>
+        <item>http://vietbao.vn/rss2/tinmoi.rss</item>
     </string-array>
 
     <string-array name="latest_name">
-        <item>
-            VnExpress
-        </item>
-         <item>
-            Dân Việt
-        </item>
-         <!--<item>
-            vietnamnet.vn
-        </item>
-         <item>
-            www.24h.com.vn
-        </item>
-         <item>
-           tuoitre.vn
-        </item>-->
-
+        <item>VnExpress</item>
+        <item>Dân Việt</item>
+        <item>Việt Báo</item>
     </string-array>
 
     <string-array name="world">
-        <!--<item>
-           http://www.24h.com.vn/upload/rss/tintucquocte.rss
-        </item>
-        <item>
-           http://vietnamnet.vn/rss/the-gioi.rss
-        </item>-->
-        <item>
-            http://dantri.com.vn/the-gioi.rss
-        </item>
-        <item>
-           http://vtv.vn/the-gioi.rss
-        </item>
-        <!--<item>-->
-           <!--http://tuoitre.vn/rss/tt-the-gioi.rss-->
-        <!--</item>-->
+        <item>http://dantri.com.vn/the-gioi.rss</item>
+        <item>http://www.xaluan.com/TheGioi.rss</item>
+        <item>http://vietbao.vn/live/The-gioi/rss.xml</item>
     </string-array>
 
     <string-array name="world_name">
-        <!--<item>
-           www.24h.com.vn
-        </item>
-         <item>
-            vietnamnet.vn
-        </item>-->
-         <item>
-            Dân Trí
-        </item>
-         <item>
-            VTV
-        </item>
-        <!-- <item>
-           tuoitre.vn
-        </item>-->
-
+        <item>Dân Trí</item>
+        <item>Xã Luận</item>
+        <item>Việt Báo</item>
     </string-array>
 
     <string-array name="vn">
-        <!--<item>
-           http://vietnamnet.vn/rss/thoi-su.rss
-        </item>-->
-        <item>
-          http://vtv.vn/trong-nuoc.rss
-        </item>
-        <item>
-         http://vtv.vn/trong-nuoc/xa-hoi.rss
-        </item>
-        <!--<item>
-          http://vietnamnet.vn/vn/thoi-su/index.html
-        </item>-->
-        <item>
-          http://vtv.vn/trong-nuoc/chinh-tri.rss
-        </item>
-
+        <item>http://vtv.vn/trong-nuoc.rss</item>
+        <item>http://www.tienphong.vn/rss/xa-hoi-tin-tuc-104.rss</item>
+        <item>http://www.xaluan.com/XaHoi.rss</item>
     </string-array>
 
     <string-array name="vn_name">
-        <!--<item>
-          vietnamnet.vn
-        </item>-->
-         <item>
-           VTV
-        </item>
-         <item>
-           VTV
-        </item>
-         <!--<item>
-          vietnamnet.vn
-        </item>-->
-         <item>
-           VTV
-        </item>
-
+        <item>VTV</item>
+        <item>Tiền Phong</item>
+        <item>Xã Luận</item>
     </string-array>
 
 
     <string-array name="sports">
-
-        <item>
-           http://vnexpress.net/rss/the-thao.rss
-        </item>
-        <!--<item>
-           http://www.24h.com.vn/upload/rss/bongda.rss
-        </item>-->
-        <item>
-          http://dantri.com.vn/the-thao.rss
-        </item>
-        <!--<item>
-           http://www.24h.com.vn/upload/rss/thethao.rss
-        </item>-->
-        <item>
-           http://vtv.vn/the-thao.rss
-        </item>
-
-
+        <item>http://vnexpress.net/rss/the-thao.rss</item>
+        <item>http://vietbao.vn/live/The-thao/rss.xml</item>
+        <item>http://dantri.com.vn/the-thao.rss</item>
+        <item>http://vtv.vn/the-thao.rss</item>
     </string-array>
-    <string-array name="sports_name">
-        <item>
-          VnExpress
-        </item>
-         <!--<item>
-          www.24h.com.vn
-        </item>-->
-         <item>
-          Dân Trí
-        </item>
-         <!--<item>
-         www.24h.com.vn
-        </item>-->
-         <item>
-           VTV
-        </item>
 
+    <string-array name="sports_name">
+        <item>VnExpress</item>
+        <item>Việt Báo</item>
+        <item>Dân Trí</item>
+        <item>VTV</item>
     </string-array>
 
     <string-array name="entertain">
-
-        <item>
-           http://vnexpress.net/rss/giai-tri.rss
-        </item>
-        <!--<item>
-          http://www.24h.com.vn/upload/rss/giaitri.rss
-        </item>-->
-        <!--<item>
-           http://vietnamnet.vn/rss/giai-tri.rss
-        </item>-->
-        <item>
-          http://dantri.com.vn/giai-tri.rss
-        </item>
-        <!--<item>
-           http://www.24h.com.vn/upload/rss/phim.rss
-        </item>-->
-
+        <item>http://vnexpress.net/rss/giai-tri.rss</item>
+        <item>http://vietbao.vn/live/The-gioi-giai-tri/rss.xml</item>
+        <item>http://ngoisao.net/rss/hau-truong.rss</item>
     </string-array>
 
     <string-array name="entertain_name">
-        <item>
-          VnExpress
-        </item>
-        <!-- <item>
-          www.24h.com.vn
-        </item>-->
-         <!--<item>
-          vietnamnet.vn
-        </item>-->
-         <item>
-       Dân Trí
-        </item>
-         <!--<item>
-          www.24h.com.vn
-        </item>-->
-
+        <item>VnExpress</item>
+        <item>Việt Báo</item>
+        <item>Ngôi Sao</item>
     </string-array>
 
     <string-array name="tech">
-
-        <item>
-           http://vnexpress.net/rss/khoa-hoc.rss
-        </item>
-        <!--<item>
-           http://www.24h.com.vn/upload/rss/congnghethongtin.rss
-        </item>-->
-       <!-- <item>
-           http://vietnamnet.vn/rss/cong-nghe.rss
-        </item>-->
-        <item>
-           http://dantri.com.vn/suc-manh-so.rss
-        </item>
-        <item>
-          http://vtv.vn/cong-nghe.rss
-        </item>
-
+        <item>http://vnexpress.net/rss/khoa-hoc.rss</item>
+        <item>http://dantri.com.vn/suc-manh-so.rss</item>
+        <item>http://vnreview.vn/feed/-/rss/13414</item>
+        <item>http://vnreview.vn/feed/-/rss/13612</item>
+        <item>http://vietbao.vn/live/Cong-nghe/rss.xml</item>
     </string-array>
 
     <string-array name="tech_name">
-
-        <item>
-           VnExpress
-        </item>
-        <!--<item>
-          www.24h.com.vn
-        </item>-->
-        <!--<item>
-          vietnamnet.vn
-        </item>-->
-        <item>
-          Dân Trí
-        </item>
-        <item>
-         VTV
-        </item>
-
+        <item>VnExpress</item>
+        <item>Dân Trí</item>
+        <item>VnReview</item>
+        <item>VnReview</item>
+        <item>Việt Báo</item>
     </string-array>
 
     <string-array name="other">
-
-        <item>
-          http://danviet.vn/rss/o-to-xe-may-1034.rss
-        </item>
-        <item>
-          http://danviet.vn/rss/kinh-te-1004.rss
-        </item>
-        <!--<item>
-        http://www.24h.com.vn/upload/rss/thoitrang.rss
-        </item>
-        <item>
-         http://www.24h.com.vn/upload/rss/suckhoedoisong.rss
-        </item>
-        <item>
-          http://www.24h.com.vn/upload/rss/dulich.rss
-        </item>-->
-
-
+        <item>http://danviet.vn/rss/o-to-xe-may-1034.rss</item>
+        <item>http://danviet.vn/rss/kinh-te-1004.rss</item>
+        <item>http://vietbao.vn/live/Game/rss.xml</item>
+        <item>http://vietbao.vn/live/Khoa-hoc/rss.xml</item>
+        <item>http://ngoisao.net/rss/thoi-trang.rss</item>
     </string-array>
     <string-array name="other_name">
-
-        <item>
-         Dân Việt
-        </item>
-        <item>
-         Dân Việt
-        </item>
-        <!--<item>
-        www.24h.com.vn
-        </item>
-        <item>
-         www.24h.com.vn
-        </item>
-        <item>
-         www.24h.com.vn
-        </item>-->
-
+        <item>Dân Việt</item>
+        <item>Dân Việt</item>
+        <item>Việt Báo</item>
+        <item>Việt Báo</item>
+        <item>Ngôi Sao</item>
     </string-array>
 </resources>
